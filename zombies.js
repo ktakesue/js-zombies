@@ -142,7 +142,13 @@ checkPack(){
  * @return {boolean} true/false     Whether player was able to store item in pack.
  */
 takeItem (item){
-
+    if(this._pack.length < 3){
+       this._pack.push(item);
+       console.log(this.name + " " + "picked up" + " " + item.name);
+    }else{
+        console.log("The pack is full so the " + item.name + " could not be stored");
+        return false;   
+    }
 }
 
 /**
