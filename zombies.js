@@ -177,7 +177,18 @@ takeItem (item){
  * @return {boolean} true/false     Whether player was able to remove item from pack.
  */
 discardItem (item){
-
+    // make variable of index to find item in pack //
+    let index = this.getPack().indexOf(item);
+    // check if item is in pack //
+    if (index === -1){
+        console.log("You don't have a " + item.name + ", you fool");
+        return false;
+    }else{
+    // remove item from pack if found //
+        this.getPack().splice(index, 1);
+        console.log("Hey " + this.name + "," + " your " + item.name + " was discarded");
+        return true;
+    }
 }
 
 /**
@@ -200,7 +211,20 @@ discardItem (item){
  * @param {Weapon} itemToEquip  The weapon item to equip.
  */
 equip (itemToEquip){
-
+    // set a variable of the weapon index //
+    let index = this.getPack().indexOf(itemToEquip);
+    // check if there is a weapon in the pack to be equipped //
+    if (itemToEquip instanceof (Weapon) && index !== -1){
+        // if there is no equipped item, equip weapon and discard from pack //
+        if (this.equipped === false){
+            this.equipped = itemToEquip;
+            this.discardItem(itemToEquip);
+        }else{
+            // replace the already equipped item with the weapon in pack // 
+            this.getPack().splice(index, 1, this.equipped);
+            this.equipped = itemToEquip;
+        } 
+    }
 }
 
 /**
