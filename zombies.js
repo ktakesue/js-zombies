@@ -246,6 +246,19 @@ equip (itemToEquip){
  * @param {Food} itemToEat  The food item to eat.
  */
 eat (itemToEat){
+    // make a variable of the food item index //
+    let index = this.getPack().indexOf(itemToEat);
+    // check if there is food in the pack to be eaten //
+    if (itemToEat instanceof (Food) && index !== -1){
+        // get item from pack //
+        this.getPack().splice(index, 1);
+        // increase health by how much energy the item gives //
+        this.health += itemToEat.energy;
+        // if mx health is lower than player's health, sets health to max health //
+        if(this.getMaxHealth() < this.health){
+            this.health = this.getMaxHealth();
+        }
+    }
 
 }
 
@@ -262,7 +275,15 @@ eat (itemToEat){
  * @param {Item/Weapon/Food} item   The item to use.
  */
 useItem (item){
-
+    // check if item is a Weapon //
+    if (item instanceof Weapon){
+        // use equip method //
+        this.equip(item);
+    // check if item is a Food //
+    }else if (item instanceof Food){
+        // use eat method //
+        this.eat(item);
+    }
 }
 
 /**
@@ -279,7 +300,13 @@ useItem (item){
  * @return {string/boolean}   Weapon name or false if nothing is equipped.
  */
 equippedWith (){
-
+    if (!this.equipped){
+        console.log("Nothing is equipped, fool");
+        return false;
+    }else{
+        console.log(this.name + " has " + this.equipped.name + " equipped");
+        return this.equipped.name;
+    }
 }
 
 
